@@ -1,6 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
+using System.Collections.Generic;
+
+// Game with simple  search algoritm
 
 namespace MyConsoleApp
 {
@@ -82,15 +85,10 @@ namespace MyConsoleApp
                             Console.SetCursorPosition(15,0);
                             Console.WriteLine("yOu BeEn KeChEd By EnEmY ");
                             break;
-
                         }
-
             Thread.Sleep(200);
-
             if (Math.Abs(enemyX - pacmanX) <= 1 && Math.Abs(enemyY - pacmanY) <= 1)
-
             {
-                
                 Console.Clear();
                 Console.SetCursorPosition(15,0);
                 Console.WriteLine("yOu BeEn KeChEd By EnEmY ");
@@ -205,214 +203,10 @@ namespace MyConsoleApp
 
 
 
-// Game with simple  search algoritm
-
-// using System;
-// using System.IO;
-// using System.Threading;
-
-// namespace MyConsoleApp
-// {
-//     internal class Program
-//     {
-//                 static void Main(string[] args)
-//                 {
-//                     char[,] map = ReadMap(@"C:\Program Files\dotnet\MyConsoleApp\bin\Debug\net8.0\map.txt");
-//                     ConsoleKeyInfo pressedKey = new ConsoleKeyInfo('w', ConsoleKey.W, false, false, false);
-//                     Console.CursorVisible = false;
-//                     Task.Run(() => {
-//                       while(true){
-//                     pressedKey = Console.ReadKey();
-//                       }
-//                     });
-//                     int pacmanX = 1;
-//                     int pacmanY = 1;
-//                                   // int previousPacmanX = pacmanX;
-//                                   // int previousPacmanY = pacmanY;
-//                     int score = 0;
-
-//                     int enemyX = 7;
-//                     int enemyY = 3;
-//                     int maxX = 5;
-//                     bool isMovingRight = true;
-                    
-//                                 int agentX = 35;
-//                                 int agentY = 4;
-
-
-//           while (true)
-//         {
-//             Console.Clear();
-//                 HandleInput(pressedKey, ref pacmanX, ref pacmanY, map, ref score);
-//             Console.ForegroundColor = ConsoleColor.Blue;
-//             DrawMap(map);
-
-            
-//             Console.ForegroundColor = ConsoleColor.Yellow;
-//             Console.SetCursorPosition(pacmanX, pacmanY);
-//             Console.Write("@");
-
-//             Console.ForegroundColor = ConsoleColor.Red;
-//             Console.SetCursorPosition(0, map.GetLength(0)); 
-//             Console.Write($"Score: {score}");
-
-            
-//             Console.ForegroundColor = ConsoleColor.Green;
-//             Console.SetCursorPosition(0, map.GetLength(0) + 1); 
-//             Console.Write($"Last Key: {pressedKey.Key}");
-
-            
-//             Console.ForegroundColor = ConsoleColor.Red;
-//             Console.SetCursorPosition(enemyX, enemyY);
-//             Console.Write("P");
-//             if(isMovingRight)
-//             {
-//               enemyX++;
-//               if(enemyX >= maxX)
-//               {
-//                 isMovingRight = false;
-//               }
-//             } else {enemyX--;
-//             if(enemyX <= 0)
-//             {
-//               isMovingRight = true;
-//             }
-//             }
-
-//               agentPath(pacmanX, pacmanY, ref agentX, ref agentY, map);
-//                         Console.ForegroundColor = ConsoleColor.Red; 
-//                         Console.SetCursorPosition(agentX, agentY);
-//                         Console.Write("A");
-
-//                         if(pacmanX == agentX && pacmanY == agentY)
-//                         {      
-
-//                             Console.Clear();
-//                             Console.SetCursorPosition(15,0);
-//                             Console.WriteLine("yOu BeEn KeChEd By EnEmY ");
-//                             break;
-//                         }
-//             Thread.Sleep(200);
-//             if (Math.Abs(enemyX - pacmanX) <= 1 && Math.Abs(enemyY - pacmanY) <= 1)
-//             {
-//                 Console.Clear();
-//                 Console.SetCursorPosition(15,0);
-//                 Console.WriteLine("yOu BeEn KeChEd By EnEmY ");
-//                 break;
-//             }           
-//               }
-//     }
-//         private static char[,] ReadMap(string path)
-//         {
-//             string[] file = File.ReadAllLines(path);
-
-//             char[,] map = new char[file.Length, GetMaxLength(file)];
-
-//             for (int y = 0; y < file.Length; y++)
-//                 for (int x = 0; x < file[y].Length; x++)
-//                     map[y, x] = file[y][x];
-//             return map;
-//         }
-//         private static void DrawMap(char[,] map)
-//         {
-//             for (int y = 0; y < map.GetLength(0); y++)
-//             {
-//                 for (int x = 0; x < map.GetLength(1); x++)
-//                 {
-//                     Console.Write(map[y, x]);
-//                 }
-//                 Console.Write("\n");
-//             }
-//         }
-//         private static void HandleInput(ConsoleKeyInfo pressedKey, ref int pacmanX, ref int pacmanY, char[,] map, ref int score)
-//         {
-//             int[] direction = GetDirection(pressedKey);
-
-//             int nextPacmanPositionX = pacmanX + direction[0];
-//             int nextPacmanPositionY = pacmanY + direction[1];
-
-//             char nextCell = map[nextPacmanPositionY, nextPacmanPositionX];
-
-//             if (nextCell == ' ' || nextCell == '.')
-//             {
-//                 pacmanX = nextPacmanPositionX;
-//                 pacmanY = nextPacmanPositionY;
-
-//                 if (nextCell == '.')
-//                 {
-//                     score++;
-//                     map[nextPacmanPositionY, nextPacmanPositionX] = ' ';
-//                 }
-//             }
-//         }
-//         private static int[] GetDirection(ConsoleKeyInfo pressedKey)
-//         {
-//             int[] direction = { 0, 0 };
-
-//             if (pressedKey.Key == ConsoleKey.UpArrow)
-//                 direction[1] = -1;
-//             else if (pressedKey.Key == ConsoleKey.DownArrow)
-//                 direction[1] = 1;
-//             else if (pressedKey.Key == ConsoleKey.LeftArrow)
-//                 direction[0] = -1;
-//             else if (pressedKey.Key == ConsoleKey.RightArrow)
-//                 direction[0] = 1;
-
-//             return direction;
-//         }
-//         private static int GetMaxLength(string[] lines)
-//         {
-//             int maxLength = lines[0].Length;
-//             foreach (var line in lines)
-//                 if (line.Length > maxLength)
-//                     maxLength = line.Length;
-//             return maxLength;
-//         }
-//                                                     private static void agentPath(int pacmanX, int pacmanY, ref int agentX, ref int agentY, char[,] map)
-//                                                     {
-//                                                         int newX = agentX;
-//                                                         int newY = agentY;
-
-//                                                         if (pacmanX > agentX && (agentX + 1) < map.GetLength(1) && map[agentY, agentX + 1] != '#')
-//                                                         {
-//                                                             newX = agentX + 1;
-//                                                         }
-//                                                         else if (pacmanX < agentX && (agentX - 1) >= 0 && map[agentY, agentX - 1] != '#')
-//                                                         {
-//                                                             newX = agentX - 1;
-//                                                         }
-                                                        
-//                                                         if (pacmanY > agentY && (agentY + 1) < map.GetLength(0) && map[agentY + 1, agentX] != '#')
-//                                                         {
-//                                                             newY = agentY + 1;
-//                                                         }
-//                                                         else if (pacmanY < agentY && (agentY - 1) >= 0 && map[agentY - 1, agentX] != '#')
-//                                                         {
-//                                                             newY = agentY - 1;
-//                                                         }
-//                                                         if (newX >= 0 && newX < map.GetLength(1) && newY >= 0 && newY < map.GetLength(0) && map[newY, newX] != '#')
-//                                                         {
-//                                                             agentX = newX;
-//                                                             agentY = newY;
-//                                                         }
-
-//                                                     }
-//                                                            // return (agentX, agentY);
-
-//     }
-// }
 
 
 
-
-
-
-
-
-
-
-// https://www.youtube.com/watch?v=Y1KspRxortQ
-//Buble sort algoritm !   __46- 50 minutes__;
+//Buble sort algoritm !  
 
 // using System;
 // using System.IO;
@@ -420,7 +214,6 @@ namespace MyConsoleApp
 // {
 //     internal class Program
 //   {
-
 //     public class BubbleSorting
 //     {
 //       public static int[] DescendingSort(int[] array)
@@ -441,9 +234,6 @@ namespace MyConsoleApp
 //           }
 //           return array;
 //       }
-
-
-
 //     }
 //     static void Main(string[] args) 
 //     {
